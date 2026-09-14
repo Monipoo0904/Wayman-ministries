@@ -1,0 +1,39 @@
+[
+  {
+    "route": "/",
+    "firstLoadUncompressedJsBytes": 469760,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/16t7qdpxw_frs.js",
+      ".next/static/chunks/27bo5_o7acxci.js",
+      ".next/static/chunks/310vm2bl3xxpt.js",
+      ".next/static/chunks/19mx3mg6lkumu.js",
+      ".next/static/chunks/27t_qfc-3_lzs.js",
+      ".next/static/chunks/2-rtuqsgzmno4.js",
+      ".next/static/chunks/turbopack-1b6uko1cu_h42.js"
+    ]
+  },
+  {
+    "route": "/_not-found",
+    "firstLoadUncompressedJsBytes": 469026,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/16t7qdpxw_frs.js",
+      ".next/static/chunks/310vm2bl3xxpt.js",
+      ".next/static/chunks/19mx3mg6lkumu.js",
+      ".next/static/chunks/27t_qfc-3_lzs.js",
+      ".next/static/chunks/2-rtuqsgzmno4.js",
+      ".next/static/chunks/turbopack-1b6uko1cu_h42.js"
+    ]
+  },
+  {
+    "route": "/ministries",
+    "firstLoadUncompressedJsBytes": 469026,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/16t7qdpxw_frs.js",
+      ".next/static/chunks/310vm2bl3xxpt.js",
+      ".next/static/chunks/19mx3mg6lkumu.js",
+      ".next/static/chunks/27t_qfc-3_lzs.js",
+      ".next/static/chunks/2-rtuqsgzmno4.js",
+      ".next/static/chunks/turbopack-1b6uko1cu_h42.js"
+    ]
+  }
+]

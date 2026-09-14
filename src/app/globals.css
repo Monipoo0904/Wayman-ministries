@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+/* Wayman Ministries brand palette — purple + gold */
+@theme {
+  --color-wm-950: #130020;
+  --color-wm-900: #200835;
+  --color-wm-800: #2d0e48;
+  --color-wm-700: #3d1560;
+  --color-wm-600: #521c7a;
+  --color-wm-500: #6b2596;
+  --color-wm-footer: #3e0a30;
+  --color-gold-300: #fad96a;
+  --color-gold-400: #f0c040;
+  --color-gold-500: #d9a81a;
+  --color-gold-600: #b88a0d;
+  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Georgia", "Times New Roman", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: #1a0a28;
+}
