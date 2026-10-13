@@ -1,27 +1,66 @@
 @import "tailwindcss";
 
-/* Wayman Ministries brand palette — purple + gold */
+/* Wayman Ministries palette — drawn from the ministry's own graphics:
+   plum + berry from the Wayman Temple crest, warm cream from the original
+   site background, and a soft champagne gold for accents. */
 @theme {
-  --color-wm-950: #130020;
-  --color-wm-900: #200835;
-  --color-wm-800: #2d0e48;
-  --color-wm-700: #3d1560;
-  --color-wm-600: #521c7a;
-  --color-wm-500: #6b2596;
-  --color-wm-footer: #3e0a30;
-  --color-gold-300: #fad96a;
-  --color-gold-400: #f0c040;
-  --color-gold-500: #d9a81a;
-  --color-gold-600: #b88a0d;
-  --font-sans: "Inter", "Helvetica Neue", Arial, sans-serif;
-  --font-serif: "Georgia", "Times New Roman", serif;
+  --color-plum-50: #f8f1f7;
+  --color-plum-100: #efe1ed;
+  --color-plum-200: #dcc0d8;
+  --color-plum-300: #c094b9;
+  --color-plum-400: #9c6394;
+  --color-plum-500: #7c3f78;
+  --color-plum-600: #652f63;
+  --color-plum-700: #522650;
+  --color-plum-800: #3d1c3d;
+  --color-plum-900: #2a1329;
+  --color-plum-950: #1c0c1b;
+
+  --color-berry-400: #c9548f;
+  --color-berry-500: #a8336f;
+
+  --color-cream-50: #fcfaf6;
+  --color-cream-100: #f7f2ea;
+  --color-cream-200: #eee6d8;
+  --color-cream-300: #e2d8c5;
+
+  --color-gold-300: #e8d3a6;
+  --color-gold-400: #d6b77a;
+  --color-gold-500: #c09a55;
+  --color-gold-600: #9a7a3f;
+
+  --color-ink: #2b2129;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, "Times New Roman", serif;
 }
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
   font-family: var(--font-sans);
-  color: #1a0a28;
+  background-color: var(--color-cream-50);
+  color: var(--color-ink);
+}
+
+/* Soft bokeh glow, echoing the light-orb backgrounds in the ministry's banners */
+.bokeh {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgb(232 211 166 / 0.18) 0, transparent 22%),
+    radial-gradient(circle at 82% 12%, rgb(201 84 143 / 0.28) 0, transparent 28%),
+    radial-gradient(circle at 70% 78%, rgb(232 211 166 / 0.12) 0, transparent 18%),
+    radial-gradient(circle at 8% 88%, rgb(201 84 143 / 0.22) 0, transparent 30%),
+    linear-gradient(135deg, var(--color-plum-950) 0%, var(--color-plum-800) 55%, var(--color-berry-500) 130%);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
 }
