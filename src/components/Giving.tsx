@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
-import { givingQuote, links } from "@/lib/site";
+import { Church, Mail } from "lucide-react";
+import GiveForm from "@/components/GiveForm";
+import { contact, givingQuote } from "@/lib/site";
 
 export default function Giving() {
   return (
@@ -14,21 +15,44 @@ export default function Giving() {
           sizes="(min-width: 1280px) 1216px, 100vw"
           className="h-auto w-full"
         />
-        <div className="flex flex-col items-center gap-8 p-10 text-center lg:flex-row lg:justify-between lg:p-14 lg:text-left">
+        <div className="grid grid-cols-1 gap-10 p-8 lg:grid-cols-2 lg:p-14">
           <div>
             <p className="eyebrow mb-4 text-berry-500">Online Giving</p>
-            <blockquote className="max-w-2xl font-serif text-3xl leading-snug font-medium text-plum-900 italic sm:text-4xl">
+            <blockquote className="font-serif text-3xl leading-snug font-medium text-plum-900 italic sm:text-4xl">
               &ldquo;{givingQuote}&rdquo;
             </blockquote>
+            <p className="mt-6 text-ink/70">Thank you for your support of this ministry.</p>
+
+            <div className="mt-10 space-y-5">
+              <p className="eyebrow text-[11px] text-gold-600">Other ways to give</p>
+              <div className="flex items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-plum-600">
+                  <Church size={18} />
+                </span>
+                <div>
+                  <p className="font-semibold text-plum-900">In person</p>
+                  <p className="text-sm text-ink/65">During worship at the South or West Campus.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white text-plum-600">
+                  <Mail size={18} />
+                </span>
+                <div>
+                  <p className="font-semibold text-plum-900">By mail</p>
+                  <p className="text-sm text-ink/65">
+                    {contact.mailingAddress.map((l) => (
+                      <span key={l} className="block">
+                        {l}
+                      </span>
+                    ))}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
-          <a
-            href={links.give}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-plum-700 px-8 py-4 font-semibold text-white transition-colors hover:bg-plum-800"
-          >
-            Click Here to Give <ArrowRight size={18} />
-          </a>
+
+          <GiveForm />
         </div>
       </div>
     </section>

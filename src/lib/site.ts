@@ -1,11 +1,14 @@
 // All content below is taken from wayman.org and its ministry pages.
 
+export const channelId = "UC88lMrs-898tVFWKxs_9LSA";
+
 export const links = {
   live: "https://wayman.org/ministries/?page_id=139",
   give: "https://wayman.org/ministries/?page_id=175",
   calendar: "https://wayman.org/ministries/?page_id=157",
-  youtube: "https://www.youtube.com/channel/UC88lMrs-898tVFWKxs_9LSA",
-  youtubeEmbed: "https://www.youtube.com/embed?listType=playlist&list=UU88lMrs-898tVFWKxs_9LSA",
+  youtube: `https://www.youtube.com/channel/${channelId}`,
+  // Existing Vanco giving page — used when Stripe isn't configured
+  vanco: "https://www.eservicepayments.com/cgi-bin/Vanco_ver3.vps?appver3=Fi1giPL8kwX_Oe1AO50jRiEtqNj9vltGrbTz0bnMDBShjXsUKRLlmI4vCU4-rZZZ2EvVVAEjqawDomKT1pbouZC09bmPsAJQUclLON5xk_A=&ver=3",
   facebook: "https://www.facebook.com/WaymanMinistries/",
   academy: "http://www.waymanacademy.org/",
   cdc: "http://www.waymancommunity.org/",
@@ -13,6 +16,8 @@ export const links = {
 
 export const contact = {
   email: "temple@wayman.org",
+  // From the church's "Ways to Give" graphic
+  mailingAddress: ["Wayman Temple AME Church", "P.O. Box 56017", "Jacksonville, FL 32241"],
 };
 
 export const campuses = [
@@ -93,3 +98,6 @@ export const visionOfTheHouse = [
 ];
 
 export const givingQuote = "I don’t give to be blessed, I am blessed therefore I give.";
+
+// Funds named on the church's "Ways to Give: Tithes & Offerings" graphic
+export const givingFunds = ["Tithes", "Offerings"] as const;

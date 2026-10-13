@@ -1,30 +1,15 @@
 import Image from "next/image";
-import { ArrowRight, ArrowUpRight, Clock, MapPin, Phone, Mail, Printer, PlayCircle } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Clock, MapPin, Phone, Mail, Printer } from "lucide-react";
 import ServiceTimes from "@/components/ServiceTimes";
 import Giving from "@/components/Giving";
+import EventCalendar from "@/components/EventCalendar";
+import VideoLibrary from "@/components/VideoLibrary";
+import Connect from "@/components/Connect";
 import { YoutubeIcon, FacebookIcon } from "@/components/icons";
-import { campuses, contact, links, prayerCall, purpose, visionOfTheHouse } from "@/lib/site";
-
-const events = [
-  {
-    img: "/images/event-30-years.png",
-    alt: "First Family Appreciation — A Legacy of Faith, Love, Vision & Victory: Honoring 30 Years of Ministry",
-    width: 565,
-    height: 473,
-  },
-  {
-    img: "/images/event-wednesday-word.png",
-    alt: "Wednesday in the Word with Rev. Dr. Mark L. Griffin — Midweek Service at 6:30 PM",
-    width: 565,
-    height: 472,
-  },
-  {
-    img: "/images/event-mentoring.png",
-    alt: "Mentoring & Tutoring Informational Meeting",
-    width: 561,
-    height: 481,
-  },
-];
+import { campuses, channelId, contact, links, prayerCall, purpose, visionOfTheHouse } from "@/lib/site";
+import { getVideos } from "@/lib/youtube";
+import { getUpcomingEvents } from "@/lib/events";
+import { dayKey, dayOfMonth, formatTime, formatWeekday } from "@/lib/eventFormat";
 
 const resources = [
   { name: "Wayman Academy of the Arts", url: links.academy, label: "www.waymanacademy.org", img: "/images/emblem-academy.jpg" },
@@ -34,11 +19,23 @@ const resources = [
 const socialClass =
   "flex h-10 w-10 items-center justify-center rounded-full text-white/70 ring-1 ring-white/20 transition-colors hover:bg-gold-400 hover:text-plum-950 hover:ring-gold-400";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [videos, events] = await Promise.all([getVideos(), getUpcomingEvents()]);
+  const thisWeek = events.filter((e) => !e.allDay).slice(0, 8);
+
   return (
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="bokeh relative overflow-hidden pt-36 pb-40 text-center lg:pt-44 lg:pb-48">
+      <section className="relative overflow-hidden bg-plum-950 pt-36 pb-40 text-center lg:pt-44 lg:pb-48">
+        <Image
+          src="/images/worship-choir.jpg"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[50%_30%] opacity-45"
+        />
+        <div className="bokeh absolute inset-0 opacity-85" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
           <Image
             src="/images/crest-temple.jpg"
@@ -66,19 +63,47 @@ export default function HomePage() {
               Our Locations <ArrowRight size={18} />
             </a>
             <a
-              href={links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 font-semibold text-white ring-1 ring-white/30 transition-colors hover:bg-white/10"
+              href="#connect"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-white/5 px-8 py-4 font-semibold text-white ring-1 ring-white/30 backdrop-blur-sm transition-colors hover:bg-white/10"
             >
-              <span className="h-2 w-2 animate-pulse rounded-full bg-berry-400" />
-              Watch Live
+              Plan a Visit
             </a>
           </div>
         </div>
       </section>
 
       <ServiceTimes />
+
+      {/* ── THIS WEEK (live from the church calendar) ─────────── */}
+      {thisWeek.length > 0 && (
+        <section className="pt-20">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <h2 className="font-serif text-3xl font-semibold text-plum-900">Coming up at Wayman</h2>
+              <a href="#events" className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-plum-700 hover:text-berry-500">
+                Full calendar <ArrowRight size={15} />
+              </a>
+            </div>
+            <ul className="-mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:px-0">
+              {thisWeek.map((e) => (
+                <li key={e.id} className="w-64 shrink-0 snap-start">
+                  <a href="#events" className="flex h-full gap-4 rounded-2xl bg-white p-4 ring-1 ring-cream-200 transition-shadow hover:shadow-lg hover:shadow-plum-900/5">
+                    <span className="flex h-14 w-12 shrink-0 flex-col items-center justify-center rounded-xl bg-plum-700 text-white">
+                      <span className="text-[10px] font-semibold tracking-wider uppercase">{formatWeekday(dayKey(e))}</span>
+                      <span className="font-serif text-xl leading-none font-semibold">{dayOfMonth(dayKey(e))}</span>
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block text-xs font-semibold text-berry-500">{formatTime(e)}</span>
+                      <span className="mt-0.5 line-clamp-2 block text-sm font-semibold text-plum-900">{e.title}</span>
+                      {e.venue && <span className="mt-0.5 block truncate text-xs text-ink/50">{e.venue}</span>}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
 
       {/* ── PASTOR'S DESK ─────────────────────────────────────── */}
       <section id="pastor" className="py-24 lg:py-32">
@@ -222,20 +247,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── EVENTS ────────────────────────────────────────────── */}
+      {/* ── EVENTS (live church calendar) ─────────────────────── */}
       <section id="events" className="bg-cream-100 py-24 lg:py-32">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="mb-14 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+          <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
             <div className="max-w-2xl">
               <p className="eyebrow mb-4 text-berry-500">Events</p>
-              <h2 className="font-serif text-4xl font-semibold text-plum-900 sm:text-5xl">
-                JOIN US LIVE in person or online!
-              </h2>
-              <p className="mt-4 text-lg text-ink/65">
-                Join us November 14&ndash;16, 2025 as we celebrate our Pastor &amp;
-                First Lady for providing 30 years of stellar service to our
-                ministry and community. The entire community is welcome!
-              </p>
+              <h2 className="font-serif text-4xl font-semibold text-plum-900 sm:text-5xl">Event Calendar</h2>
+              <p className="mt-4 text-lg text-ink/65">JOIN US LIVE in person or online!</p>
             </div>
             <a
               href={links.calendar}
@@ -243,20 +262,25 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className="inline-flex shrink-0 items-center gap-2 font-semibold text-plum-700 transition-colors hover:text-berry-500"
             >
-              Event Calendar <ArrowRight size={16} />
+              Full calendar on wayman.org <ArrowUpRight size={16} />
             </a>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-            {events.map((e) => (
-              <div key={e.img} className="overflow-hidden rounded-3xl bg-white shadow-sm ring-1 ring-cream-200 transition-shadow hover:shadow-xl hover:shadow-plum-900/10">
-                <Image src={e.img} alt={e.alt} width={e.width} height={e.height} sizes="(min-width: 768px) 33vw, 100vw" className="h-auto w-full" />
-              </div>
-            ))}
-          </div>
+          {events.length > 0 ? (
+            <EventCalendar events={events} />
+          ) : (
+            <a
+              href={links.calendar}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block rounded-3xl bg-white p-10 text-center font-semibold text-plum-700 ring-1 ring-cream-200 hover:text-berry-500"
+            >
+              View the Event Calendar →
+            </a>
+          )}
 
           {/* Prayer call */}
-          <div className="mt-6 grid grid-cols-1 overflow-hidden rounded-3xl bg-white ring-1 ring-cream-200 lg:grid-cols-2">
+          <div className="mt-16 grid grid-cols-1 overflow-hidden rounded-3xl bg-white ring-1 ring-cream-200 lg:grid-cols-2">
             <div className="relative aspect-[650/300]">
               <Image
                 src="/images/prayer-call.png"
@@ -267,7 +291,7 @@ export default function HomePage() {
               />
             </div>
             <div className="flex flex-col justify-center p-8 lg:p-12">
-              <h3 className="font-serif text-3xl font-semibold text-plum-900">Prayer Call</h3>
+              <h3 className="font-serif text-3xl font-semibold text-plum-900">Friday Prayer Call</h3>
               <p className="mt-2 flex items-center gap-2 text-sm font-medium text-berry-500">
                 <Clock size={15} /> {prayerCall.when}
               </p>
@@ -309,34 +333,21 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_220px]">
-            <div className="relative aspect-video overflow-hidden rounded-3xl shadow-2xl shadow-black/40">
+          {videos.length > 0 ? (
+            <VideoLibrary videos={videos} />
+          ) : (
+            <div className="relative mx-auto aspect-video max-w-4xl overflow-hidden rounded-3xl shadow-2xl shadow-black/40">
               <iframe
-                src={links.youtubeEmbed}
+                src={`https://www.youtube-nocookie.com/embed?listType=playlist&list=UU${channelId.slice(2)}`}
                 title="Wayman Ministries on YouTube"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
                 className="absolute inset-0 h-full w-full"
               />
             </div>
-            <a
-              href={links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mx-auto hidden w-full max-w-[220px] overflow-hidden rounded-3xl ring-1 ring-white/10 transition-transform hover:-translate-y-1 lg:block"
-            >
-              <Image
-                src="/images/live-streaming.png"
-                alt="Wayman Temple Live Streaming — Sundays at 10 AM and Noon, Wednesdays at 6:30 PM"
-                width={145}
-                height={300}
-                sizes="220px"
-                className="h-auto w-full"
-              />
-            </a>
-          </div>
+          )}
 
-          <div className="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+          <div className="mt-12 flex justify-center">
             <a
               href={links.youtube}
               target="_blank"
@@ -345,20 +356,34 @@ export default function HomePage() {
             >
               <YoutubeIcon /> View Archived Videos on YouTube
             </a>
-            <a
-              href={links.live}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white ring-1 ring-white/20 transition-colors hover:bg-white/10"
-            >
-              <PlayCircle size={16} /> Watch Live
-            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CONNECT / REGISTRATION ────────────────────────────── */}
+      <section id="connect" className="py-24 lg:py-32">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-4">
+            <p className="eyebrow mb-4 text-berry-500">Connect</p>
+            <h2 className="font-serif text-4xl font-semibold text-plum-900 sm:text-5xl">
+              You&rsquo;re always welcome at Wayman Temple!
+            </h2>
+            <p className="mt-5 text-lg text-ink/65">
+              Plan your visit, register for an upcoming event, or let us know
+              where you&rsquo;d like to serve. We&rsquo;ll be in touch.
+            </p>
+            <div className="relative mt-10 hidden aspect-[4/3] overflow-hidden rounded-3xl lg:block">
+              <Image src="/images/sanctuary-west.jpg" alt="Wayman Temple West sanctuary" fill sizes="400px" className="object-cover" />
+            </div>
+          </div>
+          <div className="lg:col-span-8">
+            <Connect events={events} />
           </div>
         </div>
       </section>
 
       {/* ── RESOURCES ─────────────────────────────────────────── */}
-      <section id="resources" className="py-24 lg:py-32">
+      <section id="resources" className="bg-cream-100 py-24 lg:py-32">
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto mb-14 max-w-2xl text-center">
             <p className="eyebrow mb-4 text-berry-500">Resources</p>
