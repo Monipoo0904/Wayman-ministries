@@ -5,6 +5,7 @@ import Giving from "@/components/Giving";
 import EventCalendar from "@/components/EventCalendar";
 import VideoLibrary from "@/components/VideoLibrary";
 import Connect from "@/components/Connect";
+import HeroVideo from "@/components/HeroVideo";
 import { YoutubeIcon, FacebookIcon } from "@/components/icons";
 import { campuses, channelId, contact, links, prayerCall, purpose, visionOfTheHouse } from "@/lib/site";
 import { getVideos } from "@/lib/youtube";
@@ -27,15 +28,9 @@ export default async function HomePage() {
     <>
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative overflow-hidden bg-plum-950 pt-36 pb-40 text-center lg:pt-44 lg:pb-48">
-        <Image
-          src="/images/worship-choir.jpg"
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-[50%_30%] opacity-45"
-        />
-        <div className="bokeh absolute inset-0 opacity-85" />
+        <HeroVideo />
+        <div className="absolute inset-0 bg-gradient-to-b from-plum-950/80 via-plum-900/55 to-plum-950/85" />
+        <div className="bokeh absolute inset-0 opacity-40 mix-blend-multiply" />
         <div className="relative mx-auto max-w-4xl px-4 sm:px-6">
           <Image
             src="/images/crest-temple.jpg"
