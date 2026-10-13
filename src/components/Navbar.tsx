@@ -3,25 +3,17 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, ChevronDown } from "lucide-react";
-import { links } from "@/lib/site";
+import { Menu, X } from "lucide-react";
 
+// Mirrors the menu on wayman.org/ministries
 const navLinks = [
-  { label: "Home", href: "/" },
-  {
-    label: "About",
-    href: "/#about",
-    children: [
-      { label: "Our Vision", href: "/#vision" },
-      { label: "Pastor's Desk", href: "/ministries#pastor" },
-      { label: "What to Expect", href: "/ministries#plan-visit" },
-    ],
-  },
-  { label: "Ministries", href: "/ministries" },
-  { label: "Events", href: "/ministries#events" },
-  { label: "Sermons", href: "/ministries#sermons" },
-  { label: "Give", href: links.give, external: true },
-  { label: "Contact", href: "/ministries#contact" },
+  { label: "Home", href: "/#" },
+  { label: "About Us", href: "/#about" },
+  { label: "Pastor’s Desk", href: "/#pastor" },
+  { label: "Events", href: "/#events" },
+  { label: "Resources", href: "/#resources" },
+  { label: "Online Giving", href: "/#give" },
+  { label: "Contact Us", href: "/#contact" },
 ];
 
 export default function Navbar() {
@@ -62,62 +54,33 @@ export default function Navbar() {
                 Wayman
               </span>
               <span className="mt-1 text-[10px] tracking-[0.35em] text-gold-300 uppercase">
-                Ministries
+                Temple
               </span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
           <nav className="hidden items-center gap-1 lg:flex">
-            {navLinks.map((link) =>
-              link.children ? (
-                <div key={link.label} className="group relative">
-                  <Link
-                    href={link.href}
-                    className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:text-white"
-                  >
-                    {link.label}
-                    <ChevronDown size={14} className="transition-transform group-hover:rotate-180" />
-                  </Link>
-                  <div className="invisible absolute top-full left-0 pt-2 opacity-0 transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                    <div className="min-w-52 rounded-2xl bg-cream-50 p-2 shadow-xl ring-1 ring-plum-900/5">
-                      {link.children.map((child) => (
-                        <Link
-                          key={child.label}
-                          href={child.href}
-                          className="block rounded-xl px-4 py-2.5 text-sm text-plum-800 transition-colors hover:bg-plum-50"
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noopener noreferrer" : undefined}
-                  className="rounded-full px-4 py-2 text-sm font-medium text-white/85 transition-colors hover:text-white"
-                >
-                  {link.label}
-                </Link>
-              )
-            )}
+            {navLinks.map((link) => (
+              <Link
+                key={link.label}
+                href={link.href}
+                className="rounded-full px-3 py-2 text-sm font-medium text-white/85 transition-colors hover:text-white xl:px-4"
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* CTA + Mobile Toggle */}
           <div className="flex items-center gap-2">
-            <a
-              href={links.live}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              href="/#live"
               className="hidden items-center gap-2 rounded-full bg-cream-50 px-5 py-2.5 text-sm font-semibold text-plum-800 transition-colors hover:bg-gold-300 sm:inline-flex"
             >
               <span className="h-2 w-2 animate-pulse rounded-full bg-berry-500" />
-              Watch Live
-            </a>
+              Live
+            </Link>
             <button
               className="p-2 text-white lg:hidden"
               onClick={() => setOpen(!open)}
@@ -133,28 +96,24 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="space-y-1 border-t border-white/10 px-4 pt-3 pb-6 lg:hidden">
-          {navLinks.flatMap((link) => [link, ...(link.children ?? [])]).map((link) => (
+          {navLinks.map((link) => (
             <Link
               key={link.label}
               href={link.href}
-              target={"external" in link && link.external ? "_blank" : undefined}
-              rel={"external" in link && link.external ? "noopener noreferrer" : undefined}
               className="block rounded-xl px-3 py-3 text-base font-medium text-white/85 transition-colors hover:bg-white/5 hover:text-white"
               onClick={() => setOpen(false)}
             >
               {link.label}
             </Link>
           ))}
-          <a
-            href={links.live}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/#live"
             className="mt-3 flex items-center justify-center gap-2 rounded-full bg-cream-50 px-4 py-3 text-sm font-semibold text-plum-800"
             onClick={() => setOpen(false)}
           >
             <span className="h-2 w-2 animate-pulse rounded-full bg-berry-500" />
-            Watch Live
-          </a>
+            Live
+          </Link>
         </div>
       )}
     </header>

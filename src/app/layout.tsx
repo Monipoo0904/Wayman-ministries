@@ -13,15 +13,15 @@ const cormorant = Cormorant_Garamond({
 });
 
 export const metadata: Metadata = {
-  title: "Wayman Ministries – Making a Difference in Jacksonville, FL",
+  title: "Wayman Ministries – We're One Church, Two Locations!",
   description:
-    "Wayman Ministries is one of Jacksonville, Florida's most dynamic ministries with two worship locations. We are the Ministry that is Making a Difference!",
-  keywords: ["Wayman Ministries", "Wayman Temple", "church Jacksonville FL", "AME church"],
+    "Wayman Temple AME Church is one of Jacksonville, Florida's most dynamic ministries. We have two worship locations, with various worship times to meet your demanding schedule.",
+  keywords: ["Wayman Ministries", "Wayman Temple", "Wayman Temple AME Church", "Jacksonville FL church"],
   openGraph: {
-    title: "Wayman Ministries – Making a Difference",
+    title: "Wayman Ministries – We're One Church, Two Locations!",
     description:
-      "Dynamic ministry serving Jacksonville, FL. Two worship locations, charter school, and community development.",
-    url: "https://wayman.org",
+      "Wayman Temple AME Church — South Campus and West Campus in Jacksonville, Florida. The Ministry that is Making a Difference!",
+    url: "https://wayman.org/ministries/",
     siteName: "Wayman Ministries",
     type: "website",
   },

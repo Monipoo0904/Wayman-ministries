@@ -1,6 +1,5 @@
-import Link from "next/link";
 import Image from "next/image";
-import { Mail, Phone } from "lucide-react";
+import { Mail } from "lucide-react";
 import { YoutubeIcon, FacebookIcon } from "@/components/icons";
 import { campuses, contact, links, serviceTimes } from "@/lib/site";
 
@@ -31,8 +30,8 @@ export default function Footer() {
               />
             </div>
             <p className="mt-6 max-w-xs text-sm leading-relaxed">
-              One church, two locations — the Ministry that is Making a
-              Difference in Jacksonville, Florida and beyond.
+              We are Wayman Ministries &ndash; the Ministry that is Making a
+              Difference!
             </p>
             <div className="mt-6 flex gap-3">
               <a href={links.youtube} target="_blank" rel="noopener noreferrer" aria-label="YouTube" className={socialClass}>
@@ -48,25 +47,26 @@ export default function Footer() {
           </div>
 
           {/* Campuses */}
-          <div className="lg:col-span-3">
+          <div className="lg:col-span-4">
             <h4 className="eyebrow mb-5 text-gold-300">Locations</h4>
             <ul className="space-y-5 text-sm">
               {campuses.map((c) => (
                 <li key={c.name}>
                   <p className="font-medium text-white">{c.name}</p>
                   <a href={c.map} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-300">
-                    {c.street}
-                    <br />
-                    {c.city}
+                    {c.street}, {c.city}
+                  </a>
+                  <a href={c.phoneHref} className="block transition-colors hover:text-gold-300">
+                    {c.phone}
                   </a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Gather */}
+          {/* Services */}
           <div className="lg:col-span-2">
-            <h4 className="eyebrow mb-5 text-gold-300">Gather</h4>
+            <h4 className="eyebrow mb-5 text-gold-300">Services</h4>
             <ul className="space-y-3 text-sm">
               {serviceTimes.map((s) => (
                 <li key={s.label}>
@@ -79,13 +79,10 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Network + contact */}
-          <div className="lg:col-span-3">
-            <h4 className="eyebrow mb-5 text-gold-300">Our Network</h4>
+          {/* Resources */}
+          <div className="lg:col-span-2">
+            <h4 className="eyebrow mb-5 text-gold-300">Resources</h4>
             <ul className="space-y-2 text-sm">
-              <li>
-                <Link href="/ministries" className="transition-colors hover:text-gold-300">Wayman Temple</Link>
-              </li>
               <li>
                 <a href={links.academy} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-300">
                   Wayman Academy of the Arts
@@ -93,18 +90,15 @@ export default function Footer() {
               </li>
               <li>
                 <a href={links.cdc} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-300">
-                  Wayman Community Development
+                  Wayman Community Development Center
+                </a>
+              </li>
+              <li>
+                <a href={links.calendar} target="_blank" rel="noopener noreferrer" className="transition-colors hover:text-gold-300">
+                  Event Calendar
                 </a>
               </li>
             </ul>
-            <div className="mt-6 space-y-2 text-sm">
-              <a href={contact.phoneHref} className="flex items-center gap-2 transition-colors hover:text-gold-300">
-                <Phone size={14} /> {contact.phone}
-              </a>
-              <a href={`mailto:${contact.email}`} className="flex items-center gap-2 transition-colors hover:text-gold-300">
-                <Mail size={14} /> {contact.email}
-              </a>
-            </div>
           </div>
         </div>
       </div>
@@ -119,9 +113,9 @@ export default function Footer() {
               height={190}
               className="h-8 w-auto rounded bg-white"
             />
-            <p>© {new Date().getFullYear()} Wayman Ministries · A congregation of the AME Church</p>
+            <p>© {new Date().getFullYear()}, Wayman Ministries</p>
           </div>
-          <p>Original Design: Kelvin Chappell</p>
+          <p>Original Design Kelvin Chappell, Updated by Darien Bathalter, LLC</p>
         </div>
       </div>
     </footer>

@@ -4,11 +4,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: import.meta.dirname,
   },
-  images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "images.unsplash.com" },
-      { protocol: "https", hostname: "img.youtube.com" },
-    ],
+  redirects() {
+    return [{ source: "/ministries", destination: "/", permanent: true }];
   },
 };
 
